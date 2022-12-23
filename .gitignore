@@ -1,5 +1,8 @@
 # Nodejs
 node_modules
 
+# Folders
+_test_
+
 # environment variables
 .env

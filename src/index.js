@@ -10,7 +10,7 @@ if (process.env.NODE_ENV != 'production') {
 require('./db')
 
 // Routers
-app.use('/products', require('./routers/products.router'))
+app.use('/product', require('./routers/products.router'))
 
 app.get('/', (req, res) => {
     res.json({ msg: 'Hola :P'})

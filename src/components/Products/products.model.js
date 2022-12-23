@@ -2,24 +2,33 @@ const { Schema, model } = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 
 const productSchema = new Schema({
-    cod: { type: String, unique: true },
+    cod: { type: String, unique: true }, // #010114 (familia-categoria-id)
     desc: String,
-    img: String,
+    title:  { type: String, unique: true },
+    img_uri: String,
+    provider_uri: String,
     tags: [String],
-    init_stock: Number,
-    stock: { type: Number, default: 0 },
-    price: Number,
-    value: Number,
-    size: {
-        XXS: {type: Boolean, default: false },
-        XS: {type: Boolean, default: false },
-        S: {type: Boolean, default: false },
-        M: {type: Boolean, default: false },
-        L: {type: Boolean, default: false },
-        XL: {type: Boolean, default: false },
-        XXL: {type: Boolean, default: false },
+    _price: { type: Number, default: 0 },
+    price: { type: Number, default: 0 },
+    _stock: {
+        XXS: { type: Number, default: 0 },
+        XS: { type: Number, default: 0 },
+        S: { type: Number, default: 0 },
+        M: { type: Number, default: 0 },
+        L: { type: Number, default: 0 },
+        XL: { type: Number, default: 0 },
+        XXL: { type: Number, default: 0 },
+    },
+    stock: {
+        XXS: { type: Number, default: 0 },
+        XS: { type: Number, default: 0 },
+        S: { type: Number, default: 0 },
+        M: { type: Number, default: 0 },
+        L: { type: Number, default: 0 },
+        XL: { type: Number, default: 0 },
+        XXL: { type: Number, default: 0 },
     }
-},{
+}, {
     timestamps: true
 })
 
