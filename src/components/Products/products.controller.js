@@ -66,6 +66,8 @@ product.removeOne = async (req, res) => {
     await Product.findOneAndDelete({ cod: id }, (err, doc) => {
         if (err) return res.status(500).send({ msg: err })
 
+        console.log(doc)
+
         cloudinary.uploader.destroy('dans/' + doc.cod, { invalidate: true, resource_type: 'image' })
             .then((result) => {
                 console.log(result)
