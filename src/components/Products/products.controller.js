@@ -27,8 +27,12 @@ product.post = async (req, res) => {
     const file_uri = req.body.file
     delete req.body.file
 
+    let body = req.body;
+
+    body.stock = body._stock
+
     cloudinary.uploader.upload(file_uri, {
-        public_id: req.body.cod,
+        public_id: body.cod,
         folder: 'dans',
         unique_filename: true
     }, async function (err, result) {
@@ -38,7 +42,7 @@ product.post = async (req, res) => {
             return
         }
 
-        let nProduct = new Product(req.body)
+        let nProduct = new Product(body)
         nProduct.img_uri = result.secure_url;
         await nProduct.save((err, doc) => {
             if (err) return res.status(500).send({ msg: err });
