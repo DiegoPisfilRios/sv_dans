@@ -83,14 +83,21 @@ product.patch = async (req, res) => {
 
     let data = req.body;
 
-    if (data.file === '') {
+    console.log(!data.file)
+
+    if (data.file == '') {
         delete data.file
 
+        console.log("-> INTO 1")
         await Product.findByIdAndUpdate({ cod: id }, data, options, (err, doc) => {
             if (err) return res.status(500).send({ msg: err })
             return res.status(200).json({ data: doc })
         })
+        return res.status(200).json({ msg: 'ok' })
     } else {
+
+        console.log("-> INTO 2")
+  
         cloudinary.uploader.destroy('dans/' + data.cod, { invalidate: true, resource_type: 'image' }) // delete old image
             .then((result) => {
                 console.log('-> ... CLD')
