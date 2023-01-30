@@ -95,7 +95,7 @@ product.put = async (req, res) => {
 
     let data = req.body;
 
-    console.log(data.file.length)
+    console.log(typeof data.file)
 
     if (data.file == '') { //* actualización solo de texto plano
         delete data.file //* eliminamos campo
