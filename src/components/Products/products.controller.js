@@ -4,25 +4,37 @@ const { cloudinary } = require('../../cloudinary')
 const product = {}
 
 product.search = async (req, res) => {
-    // Extends...
-    const { q } = req.query
-    let keywords = q.split(' ')
 
-    await Product.find({ $or: [{ tags: { $in: keywords } }, { cod: { $in: keywords } }] }, (err, docs) => {
-        if (!err) return res.status(200).json({ data: docs })
-        return res.status(500).send({ msg: err })
-    })
+    const search = req.query.search ? req.query.search : ""
+
+    //console.log(search) `/.*${search}.*/`
+
+    const limit = parseInt(req.query.limit, 10) || 10
+    const page = parseInt(req.query.page, 10) || 1
+    const publics = await Public.paginate({"cod": { $regex : search, $options: 'i' } }, { limit, page, sort: { _id: -1 } })
+
+    return res.status(200).json(publics)
+
+
+    // Extends...
+    // const { q } = req.query
+    // let keywords = q.split(' ')
+
+    // await Product.find({ $or: [{ tags: { $in: keywords } }, { cod: { $in: keywords } }] }, (err, docs) => {
+    //     if (!err) return res.status(200).json({ data: docs })
+    //     return res.status(500).send({ msg: err })
+    // })
     // return res.status(200).json({ search: keywords })
 }
 
-product.get = async (req, res) => {
+product.get = async (req, res) => { //? app:home
     await Product.find((err, docs) => {
         if (err) return res.status(500).send({ msg: err })
         return res.status(200).json({ data: docs })
     });
 }
 
-product.post = async (req, res) => {
+product.post = async (req, res) => { //? app:new
     if (!req.body) return res.status(401).send({ message: '=body: !' })
     const file_b64 = req.body.file
     delete req.body.file
@@ -77,30 +89,30 @@ product.removeOne = async (req, res) => {
     })
 }
 
-product.patch = async (req, res) => {
+product.put = async (req, res) => {
     const id = req.params.id;
     const options = { new: true };
 
     let data = req.body;
 
-    console.log(!data.file)
+    console.log(data.file.length)
 
-    if (data.file == '') {
-        delete data.file
+    if (data.file == '') { //* actualización solo de texto plano
+        delete data.file //* eliminamos campo
 
-        console.log("-> INTO 1")
-        await Product.findByIdAndUpdate({ cod: id }, data, options, (err, doc) => {
+        console.log("-> TEXTO PLANO")
+        await Product.findOneAndUpdate({ cod: id }, data, options, (err, doc) => {
             if (err) return res.status(500).send({ msg: err })
             return res.status(200).json({ data: doc })
         })
         return res.status(200).json({ msg: 'ok' })
-    } else {
+    } else { //* actualización con imagen
 
-        console.log("-> INTO 2")
+        console.log("-> TEXTO Y IMAGEN.  pic_ID:" + data.cod)
   
         cloudinary.uploader.destroy('dans/' + data.cod, { invalidate: true, resource_type: 'image' }) // delete old image
             .then((result) => {
-                console.log('-> ... CLD')
+                console.log('-> ... CLS')
                 console.log(result)
 
                 cloudinary.uploader.upload(data.file, { // up new image
@@ -117,7 +129,7 @@ product.patch = async (req, res) => {
 
                     data.img_uri = result.secure_url;
 
-                    await Product.findByIdAndUpdate({ cod: id }, data, options, (err, doc) => {
+                    await Product.findOneAndUpdate({ cod: id }, data, options, (err, doc) => {
                         if (err) return res.status(500).send({ msg: err })
                         return res.status(200).json({ data: doc })
                     })

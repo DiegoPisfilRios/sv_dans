@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const { get, post, getOne, removeOne, patch, search } = require('../components/Products/products.controller');
+const { get, post, getOne, removeOne, put, search } = require('../components/Products/products.controller');
 
 router.route('/')
-    .get(get)
-    .post(post)
+    .get(get) //? ✅
+    .post(post) //? ✅
 
 router.route('/search')
     .get(search)
@@ -11,6 +11,6 @@ router.route('/search')
 router.route("/:id")
     .get(getOne)
     .delete(removeOne)
-    .patch(patch)
+    .put(put)
 
 module.exports = router

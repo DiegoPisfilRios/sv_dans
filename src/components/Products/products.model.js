@@ -1,5 +1,6 @@
-const { Schema, model } = require('mongoose')
-const uniqueValidator = require('mongoose-unique-validator')
+const { Schema, model } = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const productSchema = new Schema({
     cod: { type: String, unique: true }, // #010114 (familia-categoria-id)
@@ -33,5 +34,6 @@ const productSchema = new Schema({
 })
 
 productSchema.plugin(uniqueValidator);
+productSchema.plugin(mongoosePaginate);
 
 module.exports = model('Product', productSchema)
