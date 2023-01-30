@@ -105,7 +105,6 @@ product.put = async (req, res) => {
             if (err) return res.status(500).send({ msg: err })
             return res.status(200).json({ data: doc })
         })
-        return res.status(200).json({ msg: 'ok' })
     } else { //* actualización con imagen
 
         console.log("-> TEXTO Y IMAGEN.  pic_ID:" + data.cod)
