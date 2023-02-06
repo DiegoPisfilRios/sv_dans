@@ -6,29 +6,8 @@ const product = {}
 
 product.search = (req, res) => {
 
-    // const search = req.query.search ? req.query.search : ""
-
     console.log(req.query)
     return res.json(jsonResponse(200, { msg: 'OK' }))
-
-    //console.log(search) `/.*${search}.*/`
-
-    // const limit = parseInt(req.query.limit, 10) || 10
-    // const page = parseInt(req.query.page, 10) || 1
-    // const publics = await Public.paginate({ "cod": { $regex: search, $options: 'i' } }, { limit, page, sort: { _id: -1 } })
-
-    // return res.status(200).json(publics)
-
-
-    // Extends...
-    // const { q } = req.query
-    // let keywords = q.split(' ')
-
-    // await Product.find({ $or: [{ tags: { $in: keywords } }, { cod: { $in: keywords } }] }, (err, docs) => {
-    //     if (!err) return res.status(200).json({ data: docs })
-    //     return res.status(500).send({ msg: err })
-    // })
-    // return res.status(200).json({ search: keywords })
 }
 
 product.get = async (req, res) => { //? app:home
