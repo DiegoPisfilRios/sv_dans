@@ -11,6 +11,6 @@ router.route('/search')
 router.route("/:id")
     .get(getOne)
     .delete(removeOne)
-    .put(put)
+    .put(put)//? ✅
 
 module.exports = router
