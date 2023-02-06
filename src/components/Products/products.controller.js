@@ -9,7 +9,7 @@ product.search = (req, res) => {
     // const search = req.query.search ? req.query.search : ""
 
     console.log(req.query)
-    res.json(jsonResponse(200, { msg: 'OK' }))
+    return res.json(jsonResponse(200, { msg: 'OK' }))
 
     //console.log(search) `/.*${search}.*/`
 
