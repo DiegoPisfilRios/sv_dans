@@ -1,14 +1,11 @@
 const mongoose = require('mongoose');
 
-mongoose.connect( process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-})
+mongoose.set('strictQuery', true);
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-    console.log('ON DB')
-});
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => {
+        console.log('=> connected to database MongoDB.');
+    })
+    .catch((error) => {
+        console.log('connection error: ' + error.message);
+    })

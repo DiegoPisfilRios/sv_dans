@@ -10,10 +10,15 @@ product.search = (req, res) => {
 }
 
 product.get = async (req, res) => { //? app:home
-    await Product.find((err, docs) => {
-        if (err) return res.status(500).send({ msg: err })
-        return res.status(200).json({ data: docs })
-    });
+   const result = await Product.find({});
+
+   if (result == null) return res.status(500).send({ msg: 'Error' }) 
+
+   return res.status(200).json({ data: result })
+    // {}, (err, docs) => {
+    //     if (err) return res.status(500).send({ msg: err })
+    //     return res.status(200).json({ data: docs })
+    // });
 }
 
 product.post = async (req, res) => { //? app:new
