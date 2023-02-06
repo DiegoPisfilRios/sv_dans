@@ -5,7 +5,6 @@ const { jsonResponse } = require('../../lib/jsonresponse')
 const product = {}
 
 product.search = (req, res) => {
-
     console.log(req.query)
     return res.json(jsonResponse(200, { msg: 'OK' }))
 }
