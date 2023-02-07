@@ -29,6 +29,8 @@ product.search = async (req, res) => {
         findQuery.$or.push({ tag: { $regex: tag, $options: 'i' } })
     }
 
+    console.log(findQuery)
+
     const result = await Product.find(findQuery);
 
     if (result == null) return res.status(500).send({ msg: 'Error' }) 
