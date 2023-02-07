@@ -4,9 +4,24 @@ const { jsonResponse } = require('../../lib/jsonresponse')
 
 const product = {}
 
-product.search = (req, res) => {
+product.search = async (req, res) => {
+
+    let title =  req.query.name || '';
+    let tag = req.query.tag || '';
+    let cod = req.query.cod || '';
+
+    const result = await Product.find({ 
+        $or: [
+            { cod: { $regex: cod, $options: 'i' }}, 
+            { title: { $regex: title, $options: 'i' }}, 
+            { tags: { $regex: tag, $options: 'i' }}
+        ]});
+
+    if (result == null) return res.status(500).send({ msg: 'Error' }) 
+
     console.log(req.query)
-    return res.json(jsonResponse(200, { msg: 'OK' }))
+    
+    return res.json(jsonResponse(200, { data: result }))
 }
 
 product.get = async (req, res) => { //? app:home
