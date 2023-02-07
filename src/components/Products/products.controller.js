@@ -6,6 +6,8 @@ const product = {}
 
 product.search = async (req, res) => {
 
+    let text = req.query.q || ''
+
     let all = req.query.all || null;
     let title =  req.query.name || null;
     let tag = req.query.tag || null;
@@ -15,18 +17,18 @@ product.search = async (req, res) => {
     let findQuery = { $or: [] };
 
     if (title)
-        findQuery.$or.push({ title: { $regex: title, $options: 'i' } })
+        findQuery.$or.push({ title: { $regex: text, $options: 'i' } })
 
     if (tag)
-        findQuery.$or.push({ tag: { $regex: tag, $options: 'i' } })
+        findQuery.$or.push({ tag: { $regex: text, $options: 'i' } })
 
     if (cod)
-        findQuery.$or.push({ cod: { $regex: cod, $options: 'i' } })
+        findQuery.$or.push({ cod: { $regex: text, $options: 'i' } })
 
     if (all) {
-        findQuery.$or.push({ cod: { $regex: cod, $options: 'i' } })
-        findQuery.$or.push({ title: { $regex: title, $options: 'i' } })
-        findQuery.$or.push({ tag: { $regex: tag, $options: 'i' } })
+        findQuery.$or.push({ cod: { $regex: text, $options: 'i' } })
+        findQuery.$or.push({ title: { $regex: text, $options: 'i' } })
+        findQuery.$or.push({ tag: { $regex: text, $options: 'i' } })
     }
 
     console.log(findQuery)
