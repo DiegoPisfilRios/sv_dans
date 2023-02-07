@@ -20,7 +20,7 @@ product.search = async (req, res) => {
         findQuery.$or.push({ title: { $regex: text, $options: 'i' } })
 
     if (tag)
-        findQuery.$or.push({ tag: { $regex: text, $options: 'i' } })
+        findQuery.$or.push({ tags: { $regex: text, $options: 'i' } })
 
     if (cod)
         findQuery.$or.push({ cod: { $regex: text, $options: 'i' } })
@@ -28,12 +28,12 @@ product.search = async (req, res) => {
     if (all) {
         findQuery.$or.push({ cod: { $regex: text, $options: 'i' } })
         findQuery.$or.push({ title: { $regex: text, $options: 'i' } })
-        findQuery.$or.push({ tag: { $regex: text, $options: 'i' } })
+        findQuery.$or.push({ tags: { $regex: text, $options: 'i' } })
     }
 
     console.log(findQuery)
 
-    const result = await Product.find(findQuery);
+    const result = await Product.find({ ...findQuery });
 
     if (result == null) return res.status(500).send({ msg: 'Error' }) 
 
