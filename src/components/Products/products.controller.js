@@ -6,16 +6,30 @@ const product = {}
 
 product.search = async (req, res) => {
 
-    let title =  req.query.name || '';
-    let tag = req.query.tag || '';
-    let cod = req.query.cod || '';
+    let all = req.query.all || null;
+    let title =  req.query.name || null;
+    let tag = req.query.tag || null;
+    let cod = req.query.cod || null;
 
-    const result = await Product.find({ 
-        $or: [
-            { cod: { $regex: cod, $options: 'i' }}, 
-            { title: { $regex: title, $options: 'i' }}, 
-            { tags: { $regex: tag, $options: 'i' }}
-        ]});
+    // prepare find options
+    let findQuery = { $or: [] };
+
+    if (title)
+        findQuery.$or.push({ title: { $regex: title, $options: 'i' } })
+
+    if (tag)
+        findQuery.$or.push({ tag: { $regex: tag, $options: 'i' } })
+
+    if (cod)
+        findQuery.$or.push({ cod: { $regex: cod, $options: 'i' } })
+
+    if (all) {
+        findQuery.$or.push({ cod: { $regex: cod, $options: 'i' } })
+        findQuery.$or.push({ title: { $regex: title, $options: 'i' } })
+        findQuery.$or.push({ tag: { $regex: tag, $options: 'i' } })
+    }
+
+    const result = await Product.find(findQuery);
 
     if (result == null) return res.status(500).send({ msg: 'Error' }) 
 
