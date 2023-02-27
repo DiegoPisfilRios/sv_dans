@@ -10,7 +10,10 @@ if (process.env.NODE_ENV != 'production') {
 require('./db')
 
 // Routers
-app.use('/product', require('./routers/products.router'))
+app.use('/product', require('./routers/product.router'))
+app.use('/sale', require('./routers/sale.router'))
+app.use('/cart', require('./routers/cart.router'))
+app.use('/user', require('./routers/user.router'))
 
 app.get('/', (req, res) => {
     res.json({ msg: 'Hola :P'})

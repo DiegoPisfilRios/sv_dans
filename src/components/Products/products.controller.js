@@ -5,9 +5,7 @@ const { jsonResponse } = require('../../lib/jsonresponse')
 const product = {}
 
 product.search = async (req, res) => {
-
     let text = req.query.q || ''
-
     let all = req.query.all || null;
     let title =  req.query.name || null;
     let tag = req.query.tag || null;
@@ -31,30 +29,21 @@ product.search = async (req, res) => {
         findQuery.$or.push({ tags: { $regex: text, $options: 'i' } })
     }
 
-    console.log(findQuery)
-
     const result = await Product.find({ ...findQuery });
-
     if (result == null) return res.status(500).send({ msg: 'Error' }) 
-
-    console.log(req.query)
     
     return res.json(jsonResponse(200, { data: result }))
 }
 
-product.get = async (req, res) => { //? app:home
+product.read = async (req, res) => { //? app:home
    const result = await Product.find({});
 
    if (result == null) return res.status(500).send({ msg: 'Error' }) 
 
    return res.status(200).json({ data: result })
-    // {}, (err, docs) => {
-    //     if (err) return res.status(500).send({ msg: err })
-    //     return res.status(200).json({ data: docs })
-    // });
 }
 
-product.post = async (req, res) => { //? app:new
+product.create = async (req, res) => { //? app:new
     if (!req.body) return res.status(401).send({ message: '=body: !' })
     const file_b64 = req.body.file
     delete req.body.file
@@ -83,8 +72,8 @@ product.post = async (req, res) => { //? app:new
     })
 }
 
-product.getOne = async (req, res) => {
-    const id = req.params.id;
+product.readOne = async (req, res) => {
+    const { id } = req.params;
 
     await Product.findOne({ cod: id }, (err, doc) => {
         if (err) return res.status(500).send({ msg: err })
@@ -92,7 +81,7 @@ product.getOne = async (req, res) => {
     })
 }
 
-product.removeOne = async (req, res) => {
+product.remove = async (req, res) => {
     const id = req.params.id;
 
     await Product.findOneAndDelete({ cod: id }, (err, doc) => {
@@ -109,7 +98,7 @@ product.removeOne = async (req, res) => {
     })
 }
 
-product.put = async (req, res) => {
+product.update = async (req, res) => {
     const id = req.params.id;
     const options = { new: true };
 
@@ -158,5 +147,5 @@ product.put = async (req, res) => {
 
 
 }
-
+ 
 module.exports = product;
