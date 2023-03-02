@@ -2,11 +2,11 @@ const { jsonResponse } = require('../../lib/jsonresponse');
 const User = require('./user.model');
 const user = {};
 
-user.create = (req, res) => {
+user.create = async (req, res) => {
     const { body } = req
 
     const nUser = new User(body);
-    nUser.save((err, doc) => {
+    await nUser.save((err, doc) => {
         if (err) return res.json(jsonResponse(500, { msg: err }))
 
         return res.json(jsonResponse(200, { data: doc }))
