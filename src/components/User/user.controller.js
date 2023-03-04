@@ -3,14 +3,15 @@ const User = require('./user.model');
 const user = {};
 
 user.create = async (req, res) => {
-    const { body } = req
+    // const { body } = req
 
-    const nUser = new User(body);
-    await nUser.save((err, doc) => {
-        if (err) return res.json(jsonResponse(500, { msg: err }))
+    // const nUser = new User(body);
+    // await nUser.save((err, doc) => {
+    //     if (err) return res.json(jsonResponse(500, { msg: err }))
 
-        return res.json(jsonResponse(200, { data: doc }))
-    })
+    //     return res.json(jsonResponse(200, { data: doc }))
+    // })
+    return res.json(jsonResponse(200, { data: 'holaa' }))
 }
 
 user.update = (req, res) => {
