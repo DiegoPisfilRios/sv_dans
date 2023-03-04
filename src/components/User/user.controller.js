@@ -5,6 +5,8 @@ const user = {};
 user.create = async (req, res) => {
     // const { body } = req
 
+    console.log('On create')
+
     // const nUser = new User(body);
     // await nUser.save((err, doc) => {
     //     if (err) return res.json(jsonResponse(500, { msg: err }))
