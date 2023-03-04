@@ -2,7 +2,7 @@ const { jsonResponse } = require('../../lib/jsonresponse');
 const User = require('./user.model');
 const user = {};
 
-user.create = async (req, res) => {
+user.create = (req, res) => {
     // const { body } = req
 
     console.log('On create')

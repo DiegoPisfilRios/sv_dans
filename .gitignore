@@ -7,3 +7,6 @@ _test_
 # environment variables
 .env
 package-lock.json
+
+.replit
+replit.nix
