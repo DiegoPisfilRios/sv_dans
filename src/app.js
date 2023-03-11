@@ -1,5 +1,6 @@
 const express = require('express')
 var exphbs = require('express-handlebars');
+var path = require('path');
 var cors = require('cors')
 const morgan = require('morgan')
 
@@ -17,7 +18,7 @@ app.set('views', './views');
 app.use(express.static('public'));
 
 app.get('/', function (req, res, next) {
-    res.render('home');
+    res.render(path.join(__dirname + '/views/home.handlebars'));
 });
 
 
