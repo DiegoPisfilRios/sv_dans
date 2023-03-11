@@ -12,8 +12,13 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }))
 
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
-// app.set('views', './views');
+app.set('views', './views');
 app.use(express.static('public'));
+
+app.get('/', function (req, res) {
+    res.render('home');
+});
+
 
 
 app.set('port', process.env.PORT || 4000)

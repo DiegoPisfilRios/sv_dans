@@ -18,7 +18,7 @@ app.get('/api', (req, res) => {
     res.json({ message: 'Hola esta es la API.' })
 });
 
-app.use('/', require('./routers/views'))
+// app.use('/', require('./routers/views'))
 
 app.use(function (req, res, next) {
 	res.status(404).send({ msg: 'Esta ruta no Existe.' });
