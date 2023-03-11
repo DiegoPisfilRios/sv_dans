@@ -15,10 +15,10 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }))
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.set('views', './views');
-app.use(express.static('public'));
+// app.use(express.static(__dirname + '/public'));
 
-app.get('/', function (req, res, next) {
-    res.render(path.join(__dirname + '/views/home.handlebars'));
+app.get('/', (req, res, next) => {
+    res.render('home');
 });
 
 
