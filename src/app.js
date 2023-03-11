@@ -1,21 +1,27 @@
 const express = require('express')
 var exphbs = require('express-handlebars');
-var path = require('path');
 var cors = require('cors')
-const morgan = require('morgan')
+const morgan = require('morgan');
+const { join } = require('path');
 
 const app = express();
-var hbs = exphbs.create({ /* config */ });
+
+var hbs = exphbs.create({
+    defaultLayout: "main",
+    layoutsDir: join(app.get("views"), "layouts"),
+    // partialsDir: join(app.get("views"), "partials"),
+    extname: ".hbs",
+});
 
 app.use(cors());
 app.use(morgan('dev'))
 app.use(express.json({ limit: '50mb' }))
 app.use(express.urlencoded({ limit: '50mb', extended: true }))
 
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
-app.set('views', './views');
-// app.use(express.static(__dirname + '/public'));
+app.engine('.hbs', hbs.engine);
+app.set('view engine', '.hbs');
+app.set('views', join(__dirname, 'views'));
+app.use(express.static(join(__dirname, 'public')));
 
 app.get('/', (req, res, next) => {
     res.render('home');
