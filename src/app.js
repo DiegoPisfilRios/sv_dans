@@ -5,8 +5,6 @@ const morgan = require('morgan');
 const path = require('path');
 
 const app = express();
-const __dirname = path.resolve();
-
 // settings
 app.set('port', process.env.PORT || 4000);
 app.set('views', path.join(__dirname, 'views')); 
@@ -17,7 +15,7 @@ app.use(express.json({ limit: '50mb' }))
 
 var hbs = exphbs.create({
     defaultLayout: "main",
-    layoutsDir: path.join(app.get("views"), "layouts"),
+    layoutsDir: path.join(app.get('views'), 'layouts'),
     // partialsDir: path.join(app.get("views"), "partials"),
     extname: ".hbs",
 });
