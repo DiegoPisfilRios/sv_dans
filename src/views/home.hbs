@@ -49,7 +49,7 @@
    let file = null
    
    document.querySelector('#form').addEventListener('submit', (e) => {
-   e.preventDefault();
+      e.preventDefault();
      
      let data = new FormData(document.querySelector('#form'));
      data = formToJSON(data);
@@ -100,7 +100,7 @@
      delete data.XL
      delete data.XXL
 
-     fetch('/api/product', {
+     /*fetch('/api/product', {
       headers: {
          'Content-Type': 'application/json'
       }
@@ -108,7 +108,10 @@
       body: JSON.stringify(data)
      }).then(res => res.json())
      .then(res => console.log(res))
-     .catch(err => console.log(err))
+     .catch(err => console.log(err))*/
+
+      fetch('/api/product').then(e => e.json()).then(e => console.log(e))
+
    })
    
    function formToJSON(form) {
