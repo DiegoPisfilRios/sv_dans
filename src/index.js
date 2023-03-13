@@ -10,14 +10,15 @@ if (process.env.NODE_ENV != 'production') {
 require('./db')
 
 // Routers
-app.use('/product', require('./routers/product.router'))
-app.use('/sale', require('./routers/sale.router'))
-app.use('/cart', require('./routers/cart.router'))
-app.use('/user', require('./routers/user.router'))
+app.use('/api/product', require('./routers/product.router'))
+app.use('/api/sale', require('./routers/sale.router'))
+app.use('/api/cart', require('./routers/cart.router'))
+app.use('/api/user', require('./routers/user.router'))
+app.get('/api', (req, res) => {
+    res.json({ message: 'Hola esta es la API.' })
+});
 
-app.get('/', (req, res) => {
-    res.json({ msg: 'Hola :P'})
-})
+// app.use('/', require('./routers/views'))
 
 app.use(function (req, res, next) {
 	res.status(404).send({ msg: 'Esta ruta no Existe.' });

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Dansteel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1>Dansteel</h1>
+    </header>
+
+    <main>
+        {{{ body }}}
+    </main>
+
+    <style>
+        :root {
+            --color-primary: #d42a2a;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        button,
+        p,
+        label,
+        input,
+        textarea {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h1 {
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #242526;
+        }
+
+        header {
+            background-color: #3a3b3c;
+            height: 8vh;
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        main {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 0;
+            min-height: calc(100vh - 8vh);
+        }
+
+        .form {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background-color: #ebeced;
+            max-width: 30vw;
+            min-width: 400px;
+        }
+
+        .form image {
+            width: 100px;
+            height: 100px;
+        }
+
+        input[type='text'],
+        textarea {
+            border: 0;
+            padding: 8px;
+            border-radius: 6px;
+            color: #121212;
+            outline: none;
+        }
+
+        .btn-save {
+            background-color: var(--color-primary);
+            padding: 6px;
+            border: 0;
+            border-radius: 6px;
+            color: #fff;
+            margin-top: 8px;
+        }
+
+        .tab-sizes {
+            display: flex;
+            flex-direction: row;
+            gap: .5rem;
+        }
+
+        .tab-sizes>div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .5em;
+        }
+
+        .tab-sizes input {
+            width: 40px;
+            text-align: center;
+        }
+
+        .tab-sizes p {
+            font-size: 13px;
+        }
+    </style>
+</body>
+
+</html>

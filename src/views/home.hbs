@@ -1,0 +1,135 @@
+<form id="form" class="form">
+   <div>
+      <image id="pic" heght="auto" width="100%"
+         src="https://res.cloudinary.com/mystoragepic/image/upload/v1667311425/dans/logo.jpg" alt="portada">
+         <input id="file" type="file" onchange="readFile(this)" accept="image/*">
+   </div>
+
+   <input type="text" name="cod" placeholder="Codigo (010101)">
+   <input type="text" name="title" placeholder="Titulo">
+   <textarea rows="2" name="desc" placeholder="Descripción"></textarea>
+   <input type="text" name="tags" placeholder="Etiquetas (cuero, acero, negro ...)">
+   <input type="text" name="provider_uri" placeholder="Link AliExpress">
+   <input type="text" name="price" placeholder="Precio de venta">
+   <input type="text" name="_price" placeholder="Precio de compra">
+   <div class="tab-sizes">
+      <div>
+         <p>XXS</p>
+         <input type="text" name="XXS" placeholder="0">
+      </div>
+      <div>
+         <p>XS</p>
+         <input type="text" name="XS" placeholder="0">
+      </div>
+      <div>
+         <p>S</p>
+         <input type="text" name="S" placeholder="0">
+      </div>
+      <div>
+         <p>M</p>
+         <input type="text" name="M" placeholder="0">
+      </div>
+      <div>
+         <p>L</p>
+         <input type="text" name="L" placeholder="0">
+      </div>
+      <div>
+         <p>XL</p>
+         <input type="text" name="XL" placeholder="0">
+      </div>
+      <div>
+         <p>XXL</p>
+         <input type="text" name="XXL" placeholder="0">
+      </div>
+   </div>
+   <button type="submit" class="btn-save">REGISTRAR</button>
+</form>
+
+<script>
+   let file = null
+   
+   document.querySelector('#form').addEventListener('submit', (e) => {
+      e.preventDefault();
+     
+     let data = new FormData(document.querySelector('#form'));
+     data = formToJSON(data);
+   
+     let isBlankFields = !data.cod ||
+       !data.title ||
+       !data.desc ||
+       !data.tags ||
+       !data._price ||
+       !data.price ||
+       !data.provider_uri;
+     
+   
+     if (file == null) {
+       isBlankFields = true
+       console.log('off')
+     }
+   
+     if (isBlankFields) {
+       alert('Completa el formulario :)')
+       return 
+     }
+   
+     let stoks = {
+       XXS: parseInt(data.XXS) || 0,
+       XS: parseInt(data.XS) || 0,
+       S: parseInt(data.S) || 0,
+       M: parseInt(data.M) || 0,
+       L: parseInt(data.L) || 0,
+       XL: parseInt(data.XL) || 0,
+       XXL: parseInt(data.XXL) || 0,
+     }
+     
+     data._stock = stoks;
+     data.stock = stoks;
+     
+     if (file) {
+       data.file = file
+     }
+   
+     data.tags = data.tags.split(',').map(e => e.trim());
+   
+     delete data.XXS
+     delete data.XS
+     delete data.S
+     delete data.M
+     delete data.L
+     delete data.XL
+     delete data.XXL
+
+     fetch('/api/product', {
+      method: 'POST',
+      headers: {
+         'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+     }).then(res => res.json())
+     .then(res => console.log(res))
+     .catch(err => console.log(err))
+
+   })
+   
+   function formToJSON(form) {
+     let object = {};
+     form.forEach((value, key) => object[key] = value);
+     return object
+   }
+   
+   function readFile(input) {
+     console.log(input.value)
+     let onFile = document.querySelector("#file").files[0]
+      if (onFile) {
+       var reader = new FileReader();
+   
+       reader.onload = function (e) {
+         document.querySelector('#pic').setAttribute('src',  e.target.result)
+         file = e.target.result;
+       }
+   
+       reader.readAsDataURL(onFile);
+     }
+   }
+</script>
